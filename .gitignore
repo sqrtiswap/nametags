@@ -1,0 +1,10 @@
+data.csv
+*.pdf
+*.dvi
+*.out
+*.aux
+*.log
+*.toc
+*.bbl
+*.blg
+*.ps
