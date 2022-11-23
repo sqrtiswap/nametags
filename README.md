@@ -1,7 +1,7 @@
 # Name tags
 
 ## Description
-Template to create name tags for workshops, scicomm events, etc.
+TeX template to easily create name tags for workshops, SciComm events, etc.
 
 ## Usage
 The data is read from `data.csv` which should look something like
