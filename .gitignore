@@ -8,3 +8,5 @@ data.csv
 *.bbl
 *.blg
 *.ps
+*.fdb_latexmk
+*.fls

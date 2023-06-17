@@ -1,46 +1,55 @@
-% define paper size
-\documentclass[a4paper,10pt]{letter}
+% !TeX encoding = utf8
 
-% use ticket.sty and define paper margin
-\usepackage[freepin,boxed]{ticket}                  % border around the name tag
-%\usepackage[freepin,crossmark]{ticket}              % crossmark in the corners
-\usepackage[a4paper, left=23mm, top=16mm]{geometry}
+\documentclass[
+	a4paper, % format is Din A4
+	10pt     % normal text has fontsize 12
+]{letter}    % use document class 'letter'
 
-% define nametag size ({x}{y} coordinates)
+% GEOMETRY
+\usepackage[
+	a4paper,                              % again have the format be Din A4
+	left=2.5cm,                           % have spacing to the left
+	top=1.5cm                             % have spacing to the top
+]{geometry}
+\usepackage[freepin,boxed]{ticket}        % border around the name tag
+%\usepackage[freepin,crossmark]{ticket}    % crossmark in the corners
 \unitlength=1mm
-\ticketSize{90}{55}
-\ticketDistance{1}{1} % distance between name tags
+\ticketSize{90}{55}                       % {x}{y} coordinates in \unitlength
+\ticketDistance{1}{1}                     % distance between name tags
 
-% load packages
 \usepackage{graphicx}                     % for placing the logo
 \usepackage{datatool}                     % for loading a CSV
 \usepackage[utf8]{inputenc}               % characters
 \usepackage{helvet}                       % font
-\renewcommand{\familydefault}{\sfdefault} % use sans font
-
-% define nametag template
-\renewcommand{\ticketdefault}{%
-  \put(30,20){\makebox[0mm]{\includegraphics[width=17mm]{grouplogo}}}
-  \put(60,18){\makebox[0mm]{\includegraphics[width=20mm]{SECONDLOGO}}}
-  \put(55, 8){\makebox[0mm]{\textbf{EVENTNAME}}}
-  \put(20, 2){\makebox[0mm]{\includegraphics[width=25mm]{EVENTLOGO}}}
-}
-
 \usepackage{fancybox}
 
-% add placeholder for name to nametag
-\newcommand{\confpin}[3]{\ticket{%
+\renewcommand{\familydefault}{\sfdefault} % use sans font
+\graphicspath{{media/}}                   % global path to files (figures, ...)
+
+% TEMPLATE
+\renewcommand{\ticketdefault}{%
+	\put(30,20){\makebox[0mm]{\includegraphics[width=17mm]{grouplogo}}}
+	\put(60,18){\makebox[0mm]{\includegraphics[width=20mm]{SECONDLOGO}}}
+	\put(55, 8){\makebox[0mm]{\textbf{EVENTNAME}}}
+	\put(20, 2){\makebox[0mm]{\includegraphics[width=25mm]{EVENTLOGO}}}
+}
+
+\newcommand{\nametag}[3]{\ticket{%
 	%\put(45,25){\makebox[0mm]{{\bfseries\huge#1}}}           % first name only
 	\put(45,25){\makebox[0mm]{\Ovalbox{\bfseries\LARGE #2}}} % full name
 	\put(45,19){\makebox[0mm]{\normalsize #3}}%              % organisation
 }}
 
-% load CSV and loop through lines
+% START OF DOCUMENT
 \begin{document}
+
+% load CSV
 \DTLloaddb{list}{data.csv}
 \sffamily
+% loop through lines
 \DTLforeach{list}{%
 \firstname=FirstName,\name=Name,\org=Organisation}{%
-	\confpin{\firstname}{\name}{\org}
+	\nametag{\firstname}{\name}{\org}
 }
+
 \end{document}
